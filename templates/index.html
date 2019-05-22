@@ -1,57 +1,38 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<title>Great Number Game</title>
-		<style media="screen">
-			body{ text-align: center; }
-			div{
-				height: 150px;
-				width: 150px;
-				padding-top: 35px;
-				margin: 25px auto;
-				color: white;
-				border: 1px solid black;
-				box-sizing: border-box;
-			}
-			div.red{
-				background: red;
-			}
-			div.green{
-				background: green;
-			}
-		</style>
-	</head>
-	<body>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Great Number Game</title>
+	<link rel="stylesheet" href="{{  url_for('static', filename='css/index.css')}}">
+</head>
+<body>
+	<div class="wrapper">
 		<h1>Welcome to the Great Number Game!</h1>
-
-		<h5>I'm thinking of a number between 1 and 100</h5>
-		<h5>Take a guess!</h5>
+		<p>I am thinking about a number between 1 - 100</p>
+		<p>Take a Guess! </p>
 
 		{% if 'result' in session %}
 			{% if session['result'] == "Too Low" %}
-				<div class="red">
-					<h1>Too Low!</h1>
-				</div>
+				<div class="redbox">TOO LOW!</div>
 			{% elif session['result'] == "Too High" %}
-				<div class="red">
-					<h1>Too High!</h1>
-				</div>
+				<div class="redbox">TOO HIGH!</div>
 			{% else %}
-				<div class="green">
-					<h3>{{session['guess']}} was the number!</h3>
-					<a href="/reset"><button>Play Again!</button></a>
+				<div class="greenbox">
+					<p>{{session['guess']}} was the number!</p>
 				</div>
+				<form action="/reset" method="post">
+					<input type="submit" value="Play Again">
+				</form>
 			{% endif %}
 		{% endif %}
-
+		<br>	
 		{% if 'result' not in session or session['result'] != "You Win" %}
 		<form action="/guess" method="post">
 			<input type="text" name="guess">
-			<p><input type="submit"></p>
+			<input type="Submit">
 		</form>
 		{% endif %}
-
-
-	</body>
+	</div>
+</body>
 </html>
